@@ -310,13 +310,13 @@ G_MODULE_EXPORT void on_cut1_activate(GtkMenuItem *menuitem, gpointer user_data)
 	GeanyDocument *doc = document_get_current();
 	GtkWidget *focusw = gtk_window_get_focus(GTK_WINDOW(main_widgets.window));
 
-	if (GTK_IS_EDITABLE(focusw))
+	if (GTK_IS_EDITABLE(focusw)) {
 		gtk_editable_cut_clipboard(GTK_EDITABLE(focusw));
-	else
-	if (IS_SCINTILLA(focusw) && doc != NULL)
-		sci_cut(doc->editor->sci);
-	else
-	if (GTK_IS_TEXT_VIEW(focusw))
+	}
+	else if (IS_SCINTILLA(focusw) && doc != NULL) {
+		sci_cut(focusw);
+	}
+	else if (GTK_IS_TEXT_VIEW(focusw))
 	{
 		GtkTextBuffer *buffer = gtk_text_view_get_buffer(
 			GTK_TEXT_VIEW(focusw));
@@ -330,14 +330,13 @@ G_MODULE_EXPORT void on_copy1_activate(GtkMenuItem *menuitem, gpointer user_data
 	GeanyDocument *doc = document_get_current();
 	GtkWidget *focusw = gtk_window_get_focus(GTK_WINDOW(main_widgets.window));
 
-	if (GTK_IS_EDITABLE(focusw))
+	if (GTK_IS_EDITABLE(focusw)) {
 		gtk_editable_copy_clipboard(GTK_EDITABLE(focusw));
-	else
-	if (IS_SCINTILLA(focusw) && doc != NULL)
-		sci_copy(doc->editor->sci);
-	else
-	if (GTK_IS_TEXT_VIEW(focusw))
-	{
+	}
+	else if (IS_SCINTILLA(focusw) && doc != NULL) {
+		sci_copy(focusw);
+	}
+	else if (GTK_IS_TEXT_VIEW(focusw)) {
 		GtkTextBuffer *buffer = gtk_text_view_get_buffer(
 			GTK_TEXT_VIEW(focusw));
 		gtk_text_buffer_copy_clipboard(buffer, gtk_clipboard_get(GDK_NONE));
@@ -350,16 +349,13 @@ G_MODULE_EXPORT void on_paste1_activate(GtkMenuItem *menuitem, gpointer user_dat
 	GeanyDocument *doc = document_get_current();
 	GtkWidget *focusw = gtk_window_get_focus(GTK_WINDOW(main_widgets.window));
 
-	if (GTK_IS_EDITABLE(focusw))
+	if (GTK_IS_EDITABLE(focusw)) {
 		gtk_editable_paste_clipboard(GTK_EDITABLE(focusw));
-	else
-	if (IS_SCINTILLA(focusw) && doc != NULL)
-	{
-		sci_paste(doc->editor->sci);
 	}
-	else
-	if (GTK_IS_TEXT_VIEW(focusw))
-	{
+	else if (IS_SCINTILLA(focusw) && doc != NULL) {
+		sci_paste(focusw);
+	}
+	else if (GTK_IS_TEXT_VIEW(focusw)) {
 		GtkTextBuffer *buffer = gtk_text_view_get_buffer(
 			GTK_TEXT_VIEW(focusw));
 		gtk_text_buffer_paste_clipboard(buffer, gtk_clipboard_get(GDK_NONE), NULL,
